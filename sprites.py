@@ -59,7 +59,7 @@ class Sprites:
 		for tiro in self.tiros:	
 
 			colisao_indio = ambiente.sprite.spritecollide(tiro,self.indio,False,ambiente.sprite.collide_mask)
-			colisao_cabana = ambiente.sprite.spritecollide(tiro,self.cabanas,False,ambiente.sprite.collide_mask)
+			colisao_barreiras = ambiente.sprite.spritecollide(tiro,self.barreiras,False,ambiente.sprite.collide_mask)
 
 			if colisao_indio:
 				for indio in colisao_indio:
@@ -70,12 +70,12 @@ class Sprites:
 
 					tiro.kill()
 
-			if colisao_cabana:
-				for cabana in colisao_cabana:
-					cabana.perder_vida(tiro.dano)
+			if colisao_barreiras:
+				for barreira in colisao_barreiras:
+					barreira.perder_vida(tiro.dano)
 					
-					if cabana.vida <= 0:
-						cabana.kill()
+					if barreira.vida <= 0:
+						barreira.kill()
 					tiro.kill()
 
 			if tiro.rect.x < 0:
@@ -94,7 +94,7 @@ class Sprites:
 					colono.perder_vida(lanca.dano)
 					
 					if colono.vida <= 0:
-						colono.animar_morte()
+						#colono.animar_morte()
 						colono.kill()
 					
 					lanca.kill()
@@ -114,26 +114,45 @@ class Sprites:
 	def interacoes_colonos_atirador(self,ambiente):
 
 		for colono in self.colonos_atirador:
-			colisao_colonos_atirador = ambiente.sprite.spritecollide(colono,self.cabanas,False,ambiente.sprite.collide_mask)
+			#colisao_colonos_atirador = ambiente.sprite.spritecollide(colono,self.cabanas,False,ambiente.sprite.collide_mask)
 			
-			if colisao_colonos_atirador:
-				for colono in colisao_colonos_atirador:
-					colono.kill()
-					cabana.perder_vida(2)
-			
-			elif colono.rect.x < 0:
-				print('Perdeu')
-				return exit()
-				
-			elif colono.clock_atirar + colono.intervalo_ataque < self.ambiente.time.get_ticks():
+			if colono.clock_atirar + colono.intervalo_ataque < self.ambiente.time.get_ticks():
 				colono.animacao_atirando()
 				self.tiros.add(Tiro(self.ambiente,1,-4.5,(colono.rect.x-colono.image.get_width()/4),(colono.rect.y+colono.image.get_height()/5.3)))
 				self.todos_objetos.add(self.tiros)
 				colono.clock_atirar = self.ambiente.time.get_ticks()
 
-			else:
-				colono.movimentar()
+			if colono.rect.x < 0:
+				print('Perdeu')
+				return exit()
+				
+			
+
+			#elif len(self.barreiras) != 0:
+			if self.barreiras:
+				for barreira in self.barreiras: 
+					if colono.rect.x - barreira.rect.x < 200 and \
+						colono.rect.y > barreira.rect.y and colono.rect.y < (barreira.rect.y + barreira.image.get_size()[1]):
+						colono.vel_x = 0
+						colono.atacar_barreira = True
+
+					
+					else:
+						colono.vel_x = -2
+						colono.atacar_barreira = False
+						#colono.movimentar()
+						print('blalalalal')
+			
+			if not self.barreiras:
+				colono.vel_x = -2
+				colono.atacar_barreira = False
+				print('blalalalal')
+
+			
+			colono.movimentar()
+			if not colono.atacar_barreira:
 				colono.animar()
+
 				
 
 	def interacoes_colonos_espada(self,ambiente):

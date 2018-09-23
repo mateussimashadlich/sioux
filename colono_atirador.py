@@ -11,6 +11,7 @@ class Colono_atirador(Boneco):
 		self.cont_caminhar = 0
 		self.cont_atirar = 0
 		self.clock_atirar = self.ambiente.time.get_ticks()
+		self.atacar_barreira = False
 		print(self.image.get_width())
 		
 	def atirar():

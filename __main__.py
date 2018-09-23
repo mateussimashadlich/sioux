@@ -9,6 +9,8 @@ from lanca import Lanca
 from barra import Barra
 from corvo import Corvo
 from barreira import Barreira
+from random import randint
+
 class Main:
 
 	
@@ -52,7 +54,7 @@ class Main:
 	def respawn_soldados(self,time):
 		
 		if self.clock_soldados + time < self.ambiente.time.get_ticks():
-			colono_atirador = Colono_atirador(self.ambiente,1,-2,0,2500,self.width,504)
+			colono_atirador = Colono_atirador(self.ambiente,1,-2,0,2500,self.width,465)
 			colono_espada = Colono_espada(self.ambiente,1,1,-2,0,2500,self.width,160)
 			self.sprites.colonos_atirador.add(colono_atirador)
 			self.sprites.colonos_espada.add(colono_espada)
@@ -60,6 +62,9 @@ class Main:
 			self.sprites.todos_objetos.add(self.sprites.colonos_atirador,self.sprites.colonos_espada,self.sprites.eixo)
 			self.clock_soldados = self.ambiente.time.get_ticks()
 	
+
+	### posição parada colono_atirador
+	## if colono_atirador.rect.x - barreira.rect.x < 200 and colono_atirador.rect.y > barreira.rect.y and colono_atirador.rect.y < (barreira.rect.y + barreira.image.get_size()[1])
 	def respawn_corvo(self,time):
 
 		if self.clock_corvo + time < self.ambiente.time.get_ticks():
@@ -76,10 +81,12 @@ class Main:
 		while True:
 			#print('clock_tick',self.relogio.tick())
 			#print('clock_fps',self.relogio.get_fps())
-			print('corvo',self.sprites.corvo)
+			#print('corvo',self.sprites.corvo)
+			print('barreira1',self.barreira1.image.get_size()[1])
+			print('barreira1 y',self.barreira1.rect.y)
 			self.ambiente.event.get()
-			self.respawn_soldados(6000)
-			self.respawn_corvo(2000)
+			self.respawn_soldados(randint(5000,6000))
+			self.respawn_corvo(randint(4000,10000))
 			self.atualizar_objetos()
 			self.sprites.interacoes(self.ambiente)
 			self.inputs.checar_entradas(self.barra,self.lanca,self.sprites.lancas,self.sprites.todos_objetos)
