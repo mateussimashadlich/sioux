@@ -29,11 +29,17 @@ class Inputs:
 
 			elif event.type == self.ambiente.KEYUP:
 				if event.key == self.ambiente.K_SPACE:
-					lanca_nova = Lanca(self.ambiente,lanca.dano,barra.energia,0,lanca.rect.x,lanca.rect.y,barra.energia,lanca.angulo)
-					lanca_nova.angulo = lanca.angulo
-					group_lancas.add(lanca_nova)
-					todos_objetos.add(group_lancas)
-					barra.zerar_energia()
+					if lanca.cd + 1000 < self.ambiente.time.get_ticks():
+						lanca_nova = Lanca(self.ambiente,lanca.dano,barra.energia,0,lanca.rect.x,lanca.rect.y,barra.energia,lanca.angulo)
+						lanca_nova.angulo = lanca.angulo
+						group_lancas.add(lanca_nova)
+						todos_objetos.add(group_lancas)
+						barra.zerar_energia()
+						lanca.cd = self.ambiente.time.get_ticks()
+					else:
+						barra.zerar_energia()
+					
+					
 
 	
 	def espaco(self,barra):
