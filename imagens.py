@@ -29,3 +29,5 @@ vida_3 = 'imagens/vidas/vida_3.png'
 corvo = ['imagens/corvo/corvo1.png','imagens/corvo/corvo2.png']
 
 barreira = 'imagens/barreira.png'
+
+torre = 'imagens/torre.png'

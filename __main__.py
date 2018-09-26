@@ -33,10 +33,10 @@ class Main:
 		self.background = self.ambiente.image.load('imagens/mapa.png')
 	
 
-		self.indio = Indio(self.ambiente,3,1000,0,486)
+		self.indio = Indio(self.ambiente,3,1000,0,390)
 
-		self.barra = Barra(self.ambiente,10,560)
-		self.lanca = Lanca(self.ambiente,1,0,0,20,486,0,90)
+		self.barra = Barra(self.ambiente,10,540)
+		self.lanca = Lanca(self.ambiente,1,0,0,20,390,0,90)
 		self.barreira1 = Barreira(self.ambiente,2,400,180,imagens.barreira)
 		self.barreira2 = Barreira(self.ambiente,3,400,380,imagens.barreira)
 		self.sprites.barreiras.add(self.barreira1,self.barreira2)
@@ -48,6 +48,7 @@ class Main:
 		self.screen.blit(self.background,[0,0])	
 		self.screen.blit(self.lanca.image,self.lanca.rect)
 		self.screen.blit(self.indio.img_vida,[10,10])
+		self.screen.blit(self.ambiente.image.load(imagens.torre),[10,446])
 		self.sprites.todos_objetos.draw(self.screen)
 		self.ambiente.display.flip()
 

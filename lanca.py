@@ -16,6 +16,7 @@ class Lanca(Objeto):
 		self.lancamento = Lancamento(angulo,forca)
 		self.lancamento.an = self.angulo
 		self.lancamento.vel_0 = vel_x
+		self.cd = self.ambiente.time.get_ticks()
 
 	def perder_vel(gravidade):
 		self.pos_y -= gravidade
@@ -28,7 +29,7 @@ class Lanca(Objeto):
 		self.animar(self.angulo+270)
 		#print("angulo",self.angulo)
 		if self.angulo == 90:
-			self.animar(self.angulo+90)
+			self.animar(self.angulo+90) 
 		elif self.lancamento.voy < 0:
 
 			self.animar(self.angulo+540)

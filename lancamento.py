@@ -13,7 +13,7 @@ class Lancamento():
 		self.voy = self.vel_0*math.sin(self.an*math.pi/180)
 		print('vel_y',self.voy)
 		print('vel_x',self.vox)
-		self.yo = 486
+		self.yo = 390
 		self.xo = 0
 		#self.alcance = ((self.grav*-1)/2)*(self.t_subida**2)
 		#self.t_descida = math.sqrt(self.alcance/(self.grav/2))
