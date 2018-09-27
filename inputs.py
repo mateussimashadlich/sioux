@@ -8,7 +8,7 @@ class Inputs:
 	def __init__(self,ambiente):
 		self.ambiente = ambiente
 
-	def checar_entradas(self,barra,lanca,group_lancas,todos_objetos):
+	def checar_entradas(self,barra,lanca,group_lancas,cd,todos_objetos):
 		
 		key = self.ambiente.key.get_pressed()
 		
@@ -36,14 +36,21 @@ class Inputs:
 						todos_objetos.add(group_lancas)
 						barra.zerar_energia()
 						lanca.cd = self.ambiente.time.get_ticks()
+						cd.ativo = True
 					else:
 						barra.zerar_energia()
 					
+		if cd.ativo:
+			if cd.intervalo + 26 < self.ambiente.time.get_ticks():
+				cd.animar()
+				cd.intervalo = self.ambiente.time.get_ticks()
+					
+						
 					
 
 	
 	def espaco(self,barra):
-
+		
 		if barra.energia < 24:
 
 			barra.aumentar_energia(0.8)

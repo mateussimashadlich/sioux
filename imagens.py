@@ -31,3 +31,8 @@ corvo = ['imagens/corvo/corvo1.png','imagens/corvo/corvo2.png']
 barreira = 'imagens/barreira.png'
 
 torre = 'imagens/torre.png'
+
+cd = ['imagens/cd/cd_01.png','imagens/cd/cd_02.png','imagens/cd/cd_03.png','imagens/cd/cd_04.png','imagens/cd/cd_05.png','imagens/cd/cd_06.png','imagens/cd/cd_07.png','imagens/cd/cd_08.png',\
+'imagens/cd/cd_09.png','imagens/cd/cd_10.png','imagens/cd/cd_11.png','imagens/cd/cd_12.png','imagens/cd/cd_13.png','imagens/cd/cd_14.png','imagens/cd/cd_15.png','imagens/cd/cd_16.png','imagens/cd/cd_17.png','imagens/cd/cd_18.png','imagens/cd/cd_19.png']
+
+cd_ready = 'imagens/cd/ready.png'

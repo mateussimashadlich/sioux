@@ -25,6 +25,7 @@ class Barra(Objeto):
 		else:
 			self.cont_img = 0
 			
+			
 
 
 

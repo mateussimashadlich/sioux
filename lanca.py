@@ -31,8 +31,8 @@ class Lanca(Objeto):
 		if self.angulo == 90:
 			self.animar(self.angulo+90) 
 		elif self.lancamento.voy < 0:
-
 			self.animar(self.angulo+540)
+
 		
 		
 

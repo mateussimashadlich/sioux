@@ -10,7 +10,7 @@ from barra import Barra
 from corvo import Corvo
 from barreira import Barreira
 from random import randint
-
+from cooldown import Cooldown
 class Main:
 
 	
@@ -34,6 +34,7 @@ class Main:
 	
 
 		self.indio = Indio(self.ambiente,3,1000,0,390)
+		self.cd = Cooldown(self.ambiente,20,380)
 
 		self.barra = Barra(self.ambiente,10,540)
 		self.lanca = Lanca(self.ambiente,1,0,0,20,390,0,90)
@@ -49,6 +50,7 @@ class Main:
 		self.screen.blit(self.lanca.image,self.lanca.rect)
 		self.screen.blit(self.indio.img_vida,[10,10])
 		self.screen.blit(self.ambiente.image.load(imagens.torre),[10,446])
+		self.screen.blit(self.cd.image,self.cd.rect)
 		self.sprites.todos_objetos.draw(self.screen)
 		self.ambiente.display.flip()
 
@@ -63,9 +65,6 @@ class Main:
 			self.sprites.todos_objetos.add(self.sprites.colonos_atirador,self.sprites.colonos_espada,self.sprites.eixo)
 			self.clock_soldados = self.ambiente.time.get_ticks()
 	
-
-	### posição parada colono_atirador
-	## if colono_atirador.rect.x - barreira.rect.x < 200 and colono_atirador.rect.y > barreira.rect.y and colono_atirador.rect.y < (barreira.rect.y + barreira.image.get_size()[1])
 	def respawn_corvo(self,time):
 
 		if self.clock_corvo + time < self.ambiente.time.get_ticks():
@@ -90,7 +89,7 @@ class Main:
 			self.respawn_corvo(randint(4000,10000))
 			self.atualizar_objetos()
 			self.sprites.interacoes(self.ambiente)
-			self.inputs.checar_entradas(self.barra,self.lanca,self.sprites.lancas,self.sprites.todos_objetos)
+			self.inputs.checar_entradas(self.barra,self.lanca,self.sprites.lancas,self.cd,self.sprites.todos_objetos)
 			#print(self.sprites.lancas)
 
 			
