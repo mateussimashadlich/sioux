@@ -5,7 +5,8 @@ from lanca import Lanca
 from colono_atirador import Colono_atirador
 from colono_espada import Colono_espada
 from cabana import Cabana
-
+from barreira import Barreira
+import imagens
 
 class Sprites:
 
@@ -44,11 +45,18 @@ class Sprites:
 		self.interacoes_corvo(ambiente)
 
 	def interacoes_corvo(self,ambiente):
-
+		#print(len(self.barreiras))
 		for corvo in self.corvo:
 
 			if corvo.rect.x < 0:
 				corvo.kill()
+				
+
+
+							#self.sprites.barreiras.add
+				
+				#print(len(self.barreiras))
+				
 			else:
 				corvo.movimentar()
 				corvo.animar()	
@@ -102,6 +110,17 @@ class Sprites:
 			if colisao_corvo:
 				for corvo in colisao_corvo:
 					corvo.kill()
+					if len(self.barreiras) < 2:
+						for barreira in self.barreiras:
+							print(barreira)
+							if barreira.rect.y == 180:
+								#print('isajdoajdfolajdoajalkjdlkjd')
+								self.barreiras.add(Barreira(ambiente,3,400,380,imagens.barreira))
+							elif barreira.rect.y == 380:
+								self.barreiras.add(Barreira(ambiente,3,400,180,imagens.barreira))
+						else:
+							self.barreiras.add(Barreira(ambiente,3,400,380,imagens.barreira))
+							self.todos_objetos.add(self.barreiras)	
 		
 			#if lanca.rect.y < ambiente.screen.get_height:
 			#	lanca.kill()
@@ -141,12 +160,12 @@ class Sprites:
 						colono.vel_x = -2
 						colono.atacar_barreira = False
 						#colono.movimentar()
-						print('blalalalal')
+						#print('blalalalal')
 			
 			if not self.barreiras:
 				colono.vel_x = -2
 				colono.atacar_barreira = False
-				print('blalalalal')
+				#print('blalalalal')
 
 			
 			colono.movimentar()

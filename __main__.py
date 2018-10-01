@@ -40,7 +40,7 @@ class Main:
 		self.lanca = Lanca(self.ambiente,1,0,0,20,390,0,90)
 		self.barreira1 = Barreira(self.ambiente,2,400,180,imagens.barreira)
 		self.barreira2 = Barreira(self.ambiente,3,400,380,imagens.barreira)
-		self.sprites.barreiras.add(self.barreira1,self.barreira2)
+		self.sprites.barreiras.add(self.barreira1)
 		self.sprites.indio.add(self.indio)
 		self.sprites.todos_objetos.add(self.sprites.indio,self.barra,self.sprites.barreiras)
 	
@@ -53,6 +53,7 @@ class Main:
 		self.screen.blit(self.cd.image,self.cd.rect)
 		self.sprites.todos_objetos.draw(self.screen)
 		self.ambiente.display.flip()
+
 
 	def respawn_soldados(self,time):
 		
@@ -82,8 +83,8 @@ class Main:
 			#print('clock_tick',self.relogio.tick())
 			#print('clock_fps',self.relogio.get_fps())
 			#print('corvo',self.sprites.corvo)
-			print('barreira1',self.barreira1.image.get_size()[1])
-			print('barreira1 y',self.barreira1.rect.y)
+			#print('barreira1',self.barreira1.image.get_size()[1])
+			#print('barreira1 y',self.barreira1.rect.y)
 			self.ambiente.event.get()
 			self.respawn_soldados(randint(5000,6000))
 			self.respawn_corvo(randint(4000,10000))
