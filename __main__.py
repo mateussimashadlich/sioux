@@ -40,7 +40,7 @@ class Main:
 		self.lanca = Lanca(self.ambiente,1,0,0,20,390,0,90)
 		self.barreira1 = Barreira(self.ambiente,2,400,180,imagens.barreira)
 		self.barreira2 = Barreira(self.ambiente,3,400,380,imagens.barreira)
-		self.sprites.barreiras.add(self.barreira1)
+		self.sprites.barreiras.add(self.barreira1,self.barreira2)
 		self.sprites.indio.add(self.indio)
 		self.sprites.todos_objetos.add(self.sprites.indio,self.barra,self.sprites.barreiras)
 	
