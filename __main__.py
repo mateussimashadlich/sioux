@@ -29,7 +29,7 @@ class Main:
 		self.height = 600
 		self.device_screen = self.ambiente.display.Info()
 		print(self.device_screen.current_w)	
-		self.screen = self.ambiente.display.set_mode([self.width,self.height])
+		self.screen = self.ambiente.display.set_mode([self.width,self.height],pygame.FULLSCREEN)
 		self.background = self.ambiente.image.load('imagens/mapa.png')
 	
 

@@ -11,7 +11,7 @@ class Lanca(Objeto):
 		self.vel_x = vel_x
 		self.vel_y = vel_y
 		self.angulo = angulo
-		print('angulo lanca: ' + str(self.angulo))
+		#print('angulo lanca: ' + str(self.angulo))
 		self.original_image = self.ambiente.image.load(imagens.lanca).convert_alpha()
 		self.lancamento = Lancamento(angulo,forca)
 		self.lancamento.an = self.angulo

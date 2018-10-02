@@ -11,8 +11,8 @@ class Lancamento():
 		self.t = 3
 		self.vox = self.vel_0*math.cos(self.an*math.pi/180)
 		self.voy = self.vel_0*math.sin(self.an*math.pi/180)
-		print('vel_y',self.voy)
-		print('vel_x',self.vox)
+		#print('vel_y',self.voy)
+		#print('vel_x',self.vox)
 		self.yo = 390
 		self.xo = 0
 		#self.alcance = ((self.grav*-1)/2)*(self.t_subida**2)
@@ -30,7 +30,7 @@ class Lancamento():
 		self.xo += self.vox
 		self.yo -= self.voy
 		self.voy += self.grav
-		print(self.voy)
+		#print(self.voy)
 			#print('x = '+str(self.x))
 			#print('y = '+str(self.y))
 			
