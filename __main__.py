@@ -25,8 +25,8 @@ class Main:
 
 	def inicializar_jogo(self):
 
-		self.width = 800
-		self.height = 600
+		self.width = 1280
+		self.height = 760
 		self.device_screen = self.ambiente.display.Info()
 		print(self.device_screen.current_w)	
 		self.screen = self.ambiente.display.set_mode([self.width,self.height],pygame.FULLSCREEN)
