@@ -19,4 +19,4 @@ class Indio(Boneco):
 		elif self.vida == 1:
 			self.img_vida = self.ambiente.image.load(imagens.vida_1).convert_alpha()
 		else:
-			self.img_vida = self.ambiente.image.load('imagens/blanka.jpg').convert_alpha()
+			self.img_vida = self.ambiente.image.load(imagens.vida_0).convert_alpha()

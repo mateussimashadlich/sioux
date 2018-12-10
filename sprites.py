@@ -26,6 +26,7 @@ class Sprites:
 		self.todos_objetos = self.ambiente.sprite.Group()
 		self.todos_objetos.add(self.tiros)
 		self.num_barreiras = 2
+		self.score = 0
 
 	def add_object_aliados(group,objecto):
 		
@@ -40,23 +41,17 @@ class Sprites:
 	def interacoes(self,ambiente):
 		
 		self.interacoes_tiros(ambiente)
-		self.interacoes_colonos_atirador(ambiente)
-		self.interacoes_colonos_espada(ambiente)
+		if self.interacoes_colonos_atirador(ambiente) == 'Perdeu' or self.interacoes_colonos_espada(ambiente) == 'Perdeu':
+			return 'Perdeu'
 		self.interacoes_lancas(ambiente)
 		self.interacoes_corvo(ambiente)
 
 	def interacoes_corvo(self,ambiente):
-		#print(len(self.barreiras))
 		for corvo in self.corvo:
 
-			if corvo.rect.x < 0:
+			if corvo.rect.x == 0:
 				corvo.kill()
 				
-
-
-							#self.sprites.barreiras.add
-				
-				#print(len(self.barreiras))
 				
 			else:
 				corvo.movimentar()
@@ -73,10 +68,6 @@ class Sprites:
 			if colisao_indio:
 				for indio in colisao_indio:
 					indio.perder_vida(tiro.dano)
-					
-					if indio.vida <= 0:
-						indio.kill()
-
 					tiro.kill()
 
 			if colisao_barreiras:
@@ -84,7 +75,13 @@ class Sprites:
 					barreira.perder_vida(tiro.dano)
 					
 					if barreira.vida <= 0:
+						for colono in self.eixo:
+							if colono.lane == barreira.lane:
+								colono.atacar_barreira = False
+								colono.vel_x = -0.1 
 						barreira.kill()
+						self.num_barreiras -= 1
+
 					tiro.kill()
 
 			if tiro.rect.x < 0:
@@ -103,29 +100,30 @@ class Sprites:
 					colono.perder_vida(lanca.dano)
 					
 					if colono.vida <= 0:
-						#colono.animar_morte()
 						colono.kill()
-					
+						self.score += 5
 					lanca.kill()
 
 			if colisao_corvo:
 				for corvo in colisao_corvo:
 					corvo.kill()
+					self.score += 10
 					if self.num_barreiras < 2:
 						for barreira in self.barreiras:
 							print(barreira)
-							if barreira.rect.y == 180:
-								#print('isajdoajdfolajdoajalkjdlkjd')
-								self.barreiras.add(Barreira(ambiente,3,400,380,imagens.barreira))
-							elif barreira.rect.y == 380:
-								self.barreiras.add(Barreira(ambiente,3,400,180,imagens.barreira))
+							if barreira.rect.y == 300:
+								print('zzzzzzzzzzzzzzzzzzz')
+								self.barreiras.add(Barreira(ambiente,2,400,500,'bot',imagens.barreira))
+
+							elif barreira.rect.y == 500:
+								print('xxxxxxxxxxxxxxxxxxxxxxx')
+								self.barreiras.add(Barreira(ambiente,3,400,300,'top',imagens.barreira))
 						else:
-							self.barreiras.add(Barreira(ambiente,3,400,380,imagens.barreira))
-							self.todos_objetos.add(self.barreiras)	
+							self.barreiras.add(Barreira(ambiente,3,400,300,'top',imagens.barreira))
+							
+						self.todos_objetos.add(self.barreiras)
 						self.num_barreiras += 1
-			#if lanca.rect.y < ambiente.screen.get_height:
-			#	lanca.kill()
-			
+
 			else:
 				lanca.movimentar()
 			if lanca.rect.y > 600:
@@ -135,41 +133,29 @@ class Sprites:
 
 		for colono in self.colonos_atirador:
 			#colisao_colonos_atirador = ambiente.sprite.spritecollide(colono,self.cabanas,False,ambiente.sprite.collide_mask)
-			
-			if colono.clock_atirar + colono.intervalo_ataque < self.ambiente.time.get_ticks():
-				colono.animacao_atirando()
-				self.tiros.add(Tiro(self.ambiente,1,-4.5,(colono.rect.x-colono.image.get_width()/4),(colono.rect.y+colono.image.get_height()/5.3)))
-				self.todos_objetos.add(self.tiros)
-				colono.clock_atirar = self.ambiente.time.get_ticks()
+			if colono.rect.x < 820:
+				if colono.clock_atirar + colono.intervalo_ataque < self.ambiente.time.get_ticks():
+					colono.animacao_atirando()
+					self.tiros.add(Tiro(self.ambiente,1,-4.5,(colono.rect.x-colono.image.get_width()/4),(colono.rect.y+colono.image.get_height()/5.3)))
+					self.todos_objetos.add(self.tiros)
+					colono.clock_atirar = self.ambiente.time.get_ticks()
 
-			if colono.rect.x < 0:
-				print('Perdeu')
-				return exit()
-				
-			
 
-			#elif len(self.barreiras) != 0:
-			if self.barreiras:
-				for barreira in self.barreiras: 
-					if colono.rect.x - barreira.rect.x < 200 and \
-						colono.rect.y > barreira.rect.y and colono.rect.y < (barreira.rect.y + barreira.image.get_size()[1]):
-						colono.vel_x = 0
-						colono.atacar_barreira = True
+			if colono.rect.x == 0:
+				return 'Perdeu'
+		
 
-					
-					else:
-						colono.vel_x = -2
-						colono.atacar_barreira = False
-						#colono.movimentar()
-						#print('blalalalal')
 			
-			if not self.barreiras:
-				colono.vel_x = -2
-				colono.atacar_barreira = False
-				#print('blalalalal')
+			if self.barreiras: ## Se existirem barreiras:
+				for barreira in self.barreiras:
+					if colono.lane == barreira.lane: ## Se ambos se encontram na mesma linha
+						if colono.rect.x - barreira.rect.x < 200 and colono.rect.x - barreira.rect.x > 64:
+							colono.vel_x = 0	
+							colono.atacar_barreira = True
 
 			
 			colono.movimentar()
+
 			if not colono.atacar_barreira:
 				colono.animar()
 
@@ -177,44 +163,53 @@ class Sprites:
 
 	def interacoes_colonos_espada(self,ambiente):
 
-		for colono in self.colonos_espada:
-			colisao_colonos_espada = ambiente.sprite.spritecollide(colono,self.barreiras,False,ambiente.sprite.collide_mask)
-			
-			if colisao_colonos_espada:
-				for cabana in colisao_colonos_espada:
-					colono.colisao = True
-					colono.vel_x = 0
-					if colono.clock_tempo_de_golpear + 250 < self.ambiente.time.get_ticks():
-						colono.animacao_golpeando()
-						colono.clock_tempo_de_golpear = self.ambiente.time.get_ticks()
-
-					elif colono.clock_golpear + colono.intervalo_ataque < self.ambiente.time.get_ticks():
-						colono.clock_golpear = self.ambiente.time.get_ticks()
-						#colono.animacao_golpeando()
-						cabana.perder_vida(colono.dano)
-						
-					elif cabana.vida <= 0:
-						#cabana.kill()
-						self.barreiras.remove(cabana)
-						self.num_barreiras -= 1
-						cabana.kill()
-						print('Tamanho da lista', (self.barreiras))
-						print('barreiras', self.barreiras)
-						for colono in self.colonos_espada:
-							colono.vel_x = -2
-							colono.colisao = False
-						
-						
-			
-			if colono.rect.x < 0:
-				colono.kill()
 		
+		for colono in self.colonos_espada:
+			colono.movimentar()		
+			colisao_barreira = ambiente.sprite.spritecollide(colono,self.barreiras,False,ambiente.sprite.collide_mask)
+			colisao_atiradores = ambiente.sprite.spritecollide(colono,self.colonos_atirador,False,ambiente.sprite.collide_mask)
+			if colisao_barreira:
+				colono.atacar_barreira = True
+				colono.vel_x = 0
+				if colono.clock_tempo_de_golpear + 250 < self.ambiente.time.get_ticks():
+					colono.animacao_golpeando()
+					colono.clock_tempo_de_golpear = self.ambiente.time.get_ticks()
+
+				elif colono.clock_golpear + colono.intervalo_ataque < self.ambiente.time.get_ticks():
+					colono.clock_golpear = self.ambiente.time.get_ticks()
+					for barreira in colisao_barreira:
+						barreira.perder_vida(colono.dano)
+						if barreira.vida <= 0:
+							for colono in self.eixo:
+								if colono.lane == barreira.lane:
+									colono.atacar_barreira = False
+									colono.vel_x = -0.1 
+							barreira.kill()
+							self.num_barreiras -= 1
+						print('Tamanho da lista', (self.barreiras))
+						print('barreiras', self.barreiras)	
+
+			#Caso um colono sobreponha o outro
+			elif colisao_atiradores:
+				for atirador in colisao_atiradores:
+					if atirador.rect.x > colono.rect.x:
+						atirador.rect.x += 0.4
+					else:	
+						colono.rect.x += 0.4
+			
+			elif colono.rect.x == 0:
+				colono.kill()
+
+
+			if colono.rect.x == 0:
+				return 'Perdeu'
 
 			else:
-				colono.movimentar()
-				if not colono.colisao:
+				if not colono.atacar_barreira:
 					colono.animar()
-				#colono.image = self.ambiente.transform.rotate(colono.image,45)
+
+
+
 
 
 

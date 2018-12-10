@@ -14,6 +14,7 @@ class Barra(Objeto):
 		self.energia += valor
 
 	def zerar_energia(self):
+
 		self.energia = 0
 		self.cont_img = 0
 		self.image = self.ambiente.image.load(imagens.barra[self.cont_img])

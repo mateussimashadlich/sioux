@@ -11,7 +11,6 @@ class Lanca(Objeto):
 		self.vel_x = vel_x
 		self.vel_y = vel_y
 		self.angulo = angulo
-		#print('angulo lanca: ' + str(self.angulo))
 		self.original_image = self.ambiente.image.load(imagens.lanca).convert_alpha()
 		self.lancamento = Lancamento(angulo,forca)
 		self.lancamento.an = self.angulo
@@ -23,15 +22,20 @@ class Lanca(Objeto):
 
 	def movimentar(self):
 		self.lancamento.calcular()
-		self.lancamento.somar()
 		self.rect.x = self.lancamento.xo
 		self.rect.y = self.lancamento.yo
 		self.animar(self.angulo+270)
-		#print("angulo",self.angulo)
-		if self.angulo == 90:
-			self.animar(self.angulo+90) 
-		elif self.lancamento.voy < 0:
-			self.animar(self.angulo+540)
+		print('voy', self.lancamento.voy)
+		print("angulo",self.angulo)
+		
+		if self.lancamento.voy < 0 and self.angulo >= 87:
+			self.animar(self.angulo+90)
+
+		elif self.lancamento.voy < 0 and self.angulo > 65 and self.angulo < 87:
+			self.animar(self.angulo+850)
+
+		elif self.lancamento.voy < 0 and self.angulo >= 30 and self.angulo <= 65:
+			self.animar(self.angulo+180)
 
 		
 		
