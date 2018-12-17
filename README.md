@@ -5,11 +5,18 @@ Para inicializá-lo deve-se executar o arquivo __main__.py.
 
 Controles dentro do jogo:
 
-KEYUP e KEYDOWN para mudar o ângulo da lança.\n
-SPACE para controlar a força de lançamento.\
-ESC para ir ao menu.\n
+KEYUP e KEYDOWN para mudar o ângulo da lança.
+
+SPACE para controlar a força de lançamento.
+
+ESC para ir ao menu.
+
 X para diminuir o volume da música.
+
 C para aumentar o volume da música.
+
 Q para parar a música.
+
 E para retomar a música.
+
 Z para fechar o jogo sem voltar ao menu.
