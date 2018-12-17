@@ -1,7 +1,7 @@
 # sioux
 Para a execução bem sucedida do jogo é necessário que se tenha instalado na máquina Python3, sua respectiva biblioteca pygame e o ORM peewee.
 
-Para inicializá-lo deve-se executar o arquivo __main__.py.
+Para inicializá-lo deve-se executar o arquivo ____main____.py.
 
 __Controles dentro do jogo:__
 
