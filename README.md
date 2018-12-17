@@ -3,7 +3,7 @@ Para a execução bem sucedida do jogo é necessário que se tenha instalado na 
 
 Para inicializá-lo deve-se executar o arquivo __main__.py.
 
-Controles dentro do jogo:
+__Controles dentro do jogo:__
 
 KEYUP e KEYDOWN para mudar o ângulo da lança.
 
