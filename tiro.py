@@ -5,7 +5,8 @@ class Tiro(Objeto):
 
 
 	def __init__(self,ambiente,dano,vel_x,pos_x,pos_y):
-		Objeto.__init__(self,ambiente,pos_x,pos_y,imagens.tiro)
+		self.tiro = ambiente.image.load('imagens/colono_atirador/tiro.png')
+		Objeto.__init__(self,ambiente,pos_x,pos_y,self.tiro)
 		self.dano = dano
 		self.vel_x = vel_x
 	

@@ -6,12 +6,13 @@ class Lanca(Objeto):
 
 
 	def __init__(self,ambiente,dano,vel_x,vel_y,pos_x,pos_y,forca,angulo=90):
-		Objeto.__init__(self,ambiente,pos_x,pos_y,imagens.lanca)
+		self.lanca = ambiente.image.load('imagens/lança1.png').convert_alpha()
+		Objeto.__init__(self,ambiente,pos_x,pos_y,self.lanca)
 		self.dano = dano
 		self.vel_x = vel_x
 		self.vel_y = vel_y
 		self.angulo = angulo
-		self.original_image = self.ambiente.image.load(imagens.lanca).convert_alpha()
+		self.original_image = self.lanca
 		self.lancamento = Lancamento(angulo,forca)
 		self.lancamento.an = self.angulo
 		self.lancamento.vel_0 = vel_x

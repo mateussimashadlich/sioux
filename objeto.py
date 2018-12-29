@@ -13,7 +13,7 @@ class Objeto(pygame.sprite.Sprite):
 
 	def definir_imagem(self,image,pos_x,pos_y):
 
-		self.image = self.ambiente.image.load(image).convert_alpha()
+		self.image = image.convert_alpha()
 		self.rect = self.image.get_rect()
 		self.rect.x = pos_x
 		self.rect.y = pos_y

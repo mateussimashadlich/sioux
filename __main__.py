@@ -13,6 +13,7 @@ from barreira import Barreira
 from random import randint
 from cooldown import Cooldown
 from seta import Seta
+from imagens import Imagens
 from mss import mss
 import peewee
 import cProfile
@@ -25,6 +26,7 @@ class Main:
 
 		self.ambiente = pygame
 		self.ambiente.init()
+		self.imagens = Imagens(self.ambiente)
 		self.sprites = Sprites(pygame)
 		self.inputs = Inputs(self.ambiente)
 		self.clock_soldados_atiradores = self.ambiente.time.get_ticks()
@@ -37,22 +39,30 @@ class Main:
 		self.device_screen = self.ambiente.display.Info()
 		print(self.device_screen.current_w)	
 		self.screen = self.ambiente.display.set_mode([self.width,self.height],self.ambiente.FULLSCREEN | self.ambiente.DOUBLEBUF)
-		self.background_imgs = imagens.mapa
-		self.background_image = self.ambiente.image.load(imagens.mapa[0]).convert()	
+		self.background_imgs = self.imagens.mapa
+		self.background_image = self.imagens.mapa[0].convert()
+		self.torre = self.ambiente.image.load('imagens/torre.png').convert_alpha()
 		self.indio = Indio(self.ambiente,3,1000,0,510)
 		self.cd = Cooldown(self.ambiente,20,490)
 		self.barra = Barra(self.ambiente,10,650)
 		self.lanca = Lanca(self.ambiente,1,0,0,20,510,0,90)
-		self.barreira1 = Barreira(self.ambiente,2,400,300,'top',imagens.barreira)
-		self.barreira2 = Barreira(self.ambiente,3,400,500,'bot',imagens.barreira)
+		self.barreira1 = Barreira(self.ambiente,2,400,300,'top')
+		self.barreira2 = Barreira(self.ambiente,3,400,500,'bot')
 		self.sprites.barreiras.add(self.barreira1,self.barreira2)
 		self.sprites.indio.add(self.indio)
 		self.sprites.todos_objetos.add(self.sprites.indio,self.barra,self.sprites.barreiras)
 		self.clock_mapa = self.ambiente.time.get_ticks()
 		self.time = self.ambiente.time.get_ticks()
 		self.seta_menu = Seta(self.ambiente,350,200)
+		self.menu_background = self.ambiente.image.load('imagens/menu_background.png')
 		self.ambiente.font.init()
 		self.fonte = self.ambiente.font.SysFont('Comic Sans MS',30)
+		self.screen.blit(self.background_image, [0, 0])
+
+
+
+
+
 	
 	def atualizar_background(self):
 		#self.screen.blit(self.ambiente.image.load(self.background[self.cont_background]),[0,0])
@@ -63,19 +73,23 @@ class Main:
 			else:
 				self.cont_background = 0
 
-			self.background_image = self.ambiente.image.load(self.background_imgs[self.cont_background]).convert() 
+			self.background_image = self.background_imgs[self.cont_background].convert()
 			self.clock_mapa = self.ambiente.time.get_ticks()
+			self.screen.blit(self.background_image, [0, 0])
+
 
 	def atualizar_objetos(self):
 
 		self.atualizar_background()
+		self.sprites.todos_objetos.clear(self.screen,self.background_image)
 		#self.screen.blit(self.ambiente.image.load(self.background[self.cont_background]).convert(),[0,0])	
-		self.screen.blit(self.background_image,[0,0])
-		self.screen.blit(self.lanca.image,self.lanca.rect)
-		self.screen.blit(self.indio.img_vida,[10,10])
-		self.screen.blit(self.ambiente.image.load(imagens.torre),[10,566])
-		self.screen.blit(self.cd.image,self.cd.rect)
-		self.screen.blit(self.fonte.render('Score: ' + str(self.sprites.score),False,(255,0,0,0)),(1080,20))
+
+		self.screen.blit(self.lanca.image, self.lanca.rect)
+		self.screen.blit(self.torre, [10, 566])
+		self.screen.blit(self.indio.img_vida, [10, 10])
+		self.screen.blit(self.cd.image, self.cd.rect)
+		self.screen.blit(self.fonte.render('Score: ' + str(self.sprites.score), False, (255, 0, 0, 0)), (1080, 20))
+
 		self.sprites.todos_objetos.draw(self.screen)
 		self.ambiente.display.flip()
 
@@ -168,12 +182,12 @@ class Main:
 				break
 			self.ambiente.display.flip()
 
-
+	@property
 	def menu(self):
 		self.option = 0
 		paused_menu = True
 		escolha = False
-		self.screen.blit(self.ambiente.image.load(imagens.menu_background),[0,0])
+		self.screen.blit(self.menu_background,[0,0])
 		self.screen.blit(self.seta_menu.image,self.seta_menu.rect)
 		self.ambiente.display.flip()
 		while paused_menu:
@@ -186,7 +200,7 @@ class Main:
 					if event.key == self.ambiente.K_DOWN and self.option < 3 and escolha == False:
 						self.option += 1
 						self.seta_menu.rect.y += 120
-						self.screen.blit(self.ambiente.image.load(imagens.menu_background),[0,0])
+						self.screen.blit(self.menu_background,[0,0])
 						self.screen.blit(self.seta_menu.image,self.seta_menu.rect)			
 						print("aisss")
 						print('option kdown',self.option)
@@ -194,13 +208,13 @@ class Main:
 					elif event.key == self.ambiente.K_UP and self.option > 0 and escolha == False:
 						self.option -= 1
 						self.seta_menu.rect.y -= 120
-						self.screen.blit(self.ambiente.image.load(imagens.menu_background),[0,0])
+						self.screen.blit(self.menu_background,[0,0])
 						self.screen.blit(self.seta_menu.image,self.seta_menu.rect)	
 						print('jjsasa')
 						print('option kup', self.option)
 					
 					elif event.key == self.ambiente.K_ESCAPE and escolha == True:
-						self.screen.blit(self.ambiente.image.load(imagens.menu_background),[0,0])
+						self.screen.blit(self.menu_background,[0,0])
 						self.screen.blit(self.seta_menu.image,self.seta_menu.rect)
 						escolha = False
 					
@@ -214,7 +228,7 @@ class Main:
 
 					#TOP10
 					elif event.key == self.ambiente.K_RETURN and self.option == 2 and escolha == False:
-						self.screen.blit(self.ambiente.image.load(imagens.mapa[0]),[0,0])
+						self.screen.blit(self.background_image,[0,0])
 						self.ambiente.time.wait(500)
 						self.salvar_pontos()
 						
@@ -263,10 +277,10 @@ class Main:
 			self.respawn_corvo(randint(4000,10000))
 			self.atualizar_objetos()
 			if self.sprites.interacoes(self.ambiente) == 'Perdeu':
-				self.menu()
+				self.menu
 			if self.inputs.checar_entradas(self.barra,self.lanca,self.sprites.lancas,self.cd,self.sprites.todos_objetos) == 'pause':
 				self.paused = True
-				self.menu()
+				self.menu
 			if not self.ambiente.mixer.music.get_busy():
 				self.ambiente.mixer.music.rewind()
 			
@@ -276,18 +290,11 @@ class Main:
 				Player.create(score=self.sprites.score)
 				self.atualizar_objetos()
 				game_over = True
-				while game_over:
+				if game_over:
 					self.ambiente.time.wait(1000)
 					game_over = False
 					self.menu()
-					#self.ambiente.screen.blit(imagens.game_over,[0,0]) A implementar !!
-					for event in self.ambiente.event.get():
-						if event.type == self.ambiente.KEYDOWN:
-							if event.key == self.ambiente.K_RETURN:
-								game_over = False
-								self.ambiente.time.wait(1000)
-								self.menu()
-								
+
 
 
 db = peewee.SqliteDatabase('sioux.db')

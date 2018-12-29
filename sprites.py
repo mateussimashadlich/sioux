@@ -49,7 +49,7 @@ class Sprites:
 	def interacoes_corvo(self,ambiente):
 		for corvo in self.corvo:
 
-			if corvo.rect.x == 0:
+			if corvo.rect.x <= 0:
 				corvo.kill()
 				
 				
@@ -68,7 +68,7 @@ class Sprites:
 			if colisao_indio:
 				for indio in colisao_indio:
 					indio.perder_vida(tiro.dano)
-					tiro.kill()
+
 
 			if colisao_barreiras:
 				for barreira in colisao_barreiras:
@@ -113,13 +113,13 @@ class Sprites:
 							print(barreira)
 							if barreira.rect.y == 300:
 								print('zzzzzzzzzzzzzzzzzzz')
-								self.barreiras.add(Barreira(ambiente,2,400,500,'bot',imagens.barreira))
+								self.barreiras.add(Barreira(ambiente,2,400,500,'bot'))
 
 							elif barreira.rect.y == 500:
 								print('xxxxxxxxxxxxxxxxxxxxxxx')
-								self.barreiras.add(Barreira(ambiente,3,400,300,'top',imagens.barreira))
+								self.barreiras.add(Barreira(ambiente,3,400,300,'top'))
 						else:
-							self.barreiras.add(Barreira(ambiente,3,400,300,'top',imagens.barreira))
+							self.barreiras.add(Barreira(ambiente,3,400,300,'top'))
 							
 						self.todos_objetos.add(self.barreiras)
 						self.num_barreiras += 1
@@ -197,11 +197,11 @@ class Sprites:
 					else:	
 						colono.rect.x += 0.4
 			
-			elif colono.rect.x == 0:
+			elif colono.rect.x <= 0:
 				colono.kill()
 
 
-			if colono.rect.x == 0:
+			if colono.rect.x <= 0:
 				return 'Perdeu'
 
 			else:
