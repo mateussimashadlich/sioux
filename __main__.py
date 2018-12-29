@@ -298,10 +298,10 @@ class Main:
 			self.respawn_corvo(randint(4000,10000))
 			self.atualizar_objetos()
 			if self.sprites.interacoes(self.ambiente) == 'Perdeu':
-				self.menu
+				self.menu()
 			if self.inputs.checar_entradas(self.barra,self.lanca,self.sprites.lancas,self.cd,self.sprites.todos_objetos) == 'pause':
 				self.paused = True
-				self.menu
+				self.menu()
 			if not self.ambiente.mixer.music.get_busy():
 				self.ambiente.mixer.music.rewind()
 			

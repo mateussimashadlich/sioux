@@ -68,6 +68,7 @@ class Sprites:
 			if colisao_indio:
 				for indio in colisao_indio:
 					indio.perder_vida(tiro.dano)
+					tiro.kill()
 
 
 			if colisao_barreiras:
@@ -136,7 +137,7 @@ class Sprites:
 			if colono.rect.x < 820:
 				if colono.clock_atirar + colono.intervalo_ataque < self.ambiente.time.get_ticks():
 					colono.animacao_atirando()
-					self.tiros.add(Tiro(self.ambiente,1,-4.5,(colono.rect.x-colono.image.get_width()/4),(colono.rect.y+colono.image.get_height()/5.3)))
+					self.tiros.add(Tiro(self.ambiente, 1, -4.5, (colono.rect.x-colono.image.get_width()/4), (colono.rect.y+colono.image.get_height()/5.3)))
 					self.todos_objetos.add(self.tiros)
 					colono.clock_atirar = self.ambiente.time.get_ticks()
 
