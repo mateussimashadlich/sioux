@@ -155,7 +155,7 @@ class Main:
 						self.paused = False
 						self.ambiente.time.wait(1)
 
-	def salvar_pontos(self):
+	def mostrar_rank(self):
 		fonte = self.ambiente.font.SysFont('Comic Sans MS',30)
 		scorecolumn = fonte.render('Pontuação',False,(0,0,0))
 		idcolumn = fonte.render('Posição',False,(0,0,0))
@@ -181,6 +181,25 @@ class Main:
 			if score == scores[9]:
 				break
 			self.ambiente.display.flip()
+
+	def mostrar_instruçoes(self):
+		fonte = self.ambiente.font.SysFont('Comic Sans MS', 30)
+		diminuir_angulo = fonte.render("Diminuir Ângulo: Seta para Baixo",False,(0,0,0))
+		aumentar_angulo = fonte.render("Aumentar Ângulo: Seta para Cima",False,(0,0,0))
+		controlar_força = fonte.render("Controlar Força de Lançamento: Barra de Espaço",False,(0,0,0))
+		q = fonte.render("Pausar música: Q",False,(0,0,0))
+		e = fonte.render("Retomar música: E",False,(0,0,0))
+		x = fonte.render("Reduzir volume: X",False,(0,0,0))
+		c = fonte.render("Aumentar volume: C",False,(0,0,0))
+		esc = fonte.render("Voltar ao menu: ESC",False,(0,0,0))
+		self.screen.blit(esc, (450, 180))
+		self.screen.blit(diminuir_angulo, (450, 240))
+		self.screen.blit(aumentar_angulo, (450, 300))
+		self.screen.blit(controlar_força, (450, 360))
+		self.screen.blit(q, (450, 420))
+		self.screen.blit(e, (450, 480))
+		self.screen.blit(x, (450, 540))
+		self.screen.blit(c, (450, 600))
 
 	@property
 	def menu(self):
@@ -226,11 +245,17 @@ class Main:
 						if self.paused == False:
 							self.iniciar()
 
+					# INSTRUÇÕES
+					elif event.key == self.ambiente.K_RETURN and self.option == 1 and escolha == False:
+						self.screen.blit(self.background_image, [0, 0])
+						self.mostrar_instruçoes()
+						self.ambiente.display.flip()
+						escolha = True
+
 					#TOP10
 					elif event.key == self.ambiente.K_RETURN and self.option == 2 and escolha == False:
 						self.screen.blit(self.background_image,[0,0])
-						self.ambiente.time.wait(500)
-						self.salvar_pontos()
+						self.mostrar_rank()
 						
 						escolha = True
 					
@@ -241,14 +266,8 @@ class Main:
 						return exit()
 
 					
-					#INSTRUÇÕES
-					'''
-					elif event.key == self.ambiente.K_RETURN and self.option == 2 and escolha == False:
-						self.ambiente.time.wait(1000)
-						self.screen.blit(self.ambiente.image.load(imagens.instrucoes),(0,0))
-						self.ambiente.display.flip()
-						escolha = True
-					'''
+
+
 		
 					
 
