@@ -1,4 +1,4 @@
-import imagens
+
 from sprites import Sprites
 from copy import copy
 from lanca import Lanca

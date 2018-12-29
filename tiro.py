@@ -1,5 +1,5 @@
 from objeto import Objeto
-import imagens
+
 
 class Tiro(Objeto):
 

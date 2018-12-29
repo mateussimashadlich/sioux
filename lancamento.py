@@ -7,12 +7,12 @@ class Lancamento():
 
 		self.an = angulo
 		self.vel_0 = vel_0
-		self.grav = -0.33
+		self.grav = -0.1
 		self.tx = 0
 		self.ty = 0
 		self.t = 3
-		self.vox = self.vel_0*math.cos(self.an*math.pi/180)
-		self.voy = self.vel_0*math.sin(self.an*math.pi/180)
+		self.vox = self.vel_0*math.cos(self.an*math.pi/180)/2
+		self.voy = self.vel_0*math.sin(self.an*math.pi/180)/2
 		self.yo = 510
 		self.xo = 0
 

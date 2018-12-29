@@ -1,6 +1,6 @@
 from objeto import Objeto
 from lancamento import Lancamento
-import imagens
+
 
 class Lanca(Objeto):
 

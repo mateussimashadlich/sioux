@@ -2,7 +2,7 @@ import pygame
 import random
 from sprites import Sprites
 from inputs import Inputs
-import imagens
+
 from colono_atirador import Colono_atirador
 from colono_espada import Colono_espada
 from indio import Indio
@@ -13,8 +13,7 @@ from barreira import Barreira
 from random import randint
 from cooldown import Cooldown
 from seta import Seta
-from imagens import Imagens
-from mss import mss
+
 import peewee
 import cProfile
 
@@ -26,7 +25,6 @@ class Main:
 
 		self.ambiente = pygame
 		self.ambiente.init()
-		self.imagens = Imagens(self.ambiente)
 		self.sprites = Sprites(pygame)
 		self.inputs = Inputs(self.ambiente)
 		self.clock_soldados_atiradores = self.ambiente.time.get_ticks()
@@ -39,8 +37,10 @@ class Main:
 		self.device_screen = self.ambiente.display.Info()
 		print(self.device_screen.current_w)	
 		self.screen = self.ambiente.display.set_mode([self.width,self.height],self.ambiente.FULLSCREEN | self.ambiente.DOUBLEBUF)
-		self.background_imgs = self.imagens.mapa
-		self.background_image = self.imagens.mapa[0].convert()
+
+		self.background_imgs = [self.ambiente.image.load('imagens/mapa/mapa_1.png').convert(), self.ambiente.image.load('imagens/mapa/mapa_2.png').convert(),\
+							   self.ambiente.image.load('imagens/mapa/mapa_3.png').convert(), self.ambiente.image.load('imagens/mapa/mapa_4.png').convert()]
+		self.background_image = self.background_imgs[0]
 		self.torre = self.ambiente.image.load('imagens/torre.png').convert_alpha()
 		self.indio = Indio(self.ambiente,3,1000,0,510)
 		self.cd = Cooldown(self.ambiente,20,490)
@@ -101,9 +101,9 @@ class Main:
 
 		if self.clock_soldados_espada + self.time_respawn_espada < self.ambiente.time.get_ticks():
 			if lanes[1] == 'bot':
-				colono_espada = Colono_espada(self.ambiente,1,1,-0.08,0,2500,self.width,525,lanes[1])
+				colono_espada = Colono_espada(self.ambiente,1,1,-1,0,2500,self.width,525,lanes[1])
 			else:
-				colono_espada = Colono_espada(self.ambiente,1,1,-0.08,0,2500,self.width,300,lanes[1])
+				colono_espada = Colono_espada(self.ambiente,1,1,-1,0,2500,self.width,300,lanes[1])
 			self.sprites.colonos_espada.add(colono_espada)
 			self.sprites.eixo.add(colono_espada)
 			self.sprites.todos_objetos.add(self.sprites.colonos_espada,self.sprites.eixo)
@@ -112,13 +112,13 @@ class Main:
 
 		if self.clock_soldados_atiradores + self.time_respawn_atirador < self.ambiente.time.get_ticks():
 			if lanes[0] == 'bot' and lanes[1] == lanes[0]:
-				colono_atirador = Colono_atirador(self.ambiente,1,-0.08,0,2500,self.width,300,'top')
+				colono_atirador = Colono_atirador(self.ambiente,1,-0.001,0,2500,self.width,300,'top')
 			elif lanes[0] == 'top' and lanes[1] == lanes[0]:
-				colono_atirador = Colono_atirador(self.ambiente,1,-0.08,0,2500,self.width,525,'bot')
+				colono_atirador = Colono_atirador(self.ambiente,1,-0.001,0,2500,self.width,525,'bot')
 			elif lanes[0] == 'top':
-				colono_atirador = Colono_atirador(self.ambiente,1,-0.08,0,2500,self.width,300,lanes[0])
+				colono_atirador = Colono_atirador(self.ambiente,1,-0.001,0,2500,self.width,300,lanes[0])
 			else:
-				colono_atirador = Colono_atirador(self.ambiente,1,-0.08,0,2500,self.width,525,lanes[0])
+				colono_atirador = Colono_atirador(self.ambiente,1,-0.001,0,2500,self.width,525,lanes[0])
 				
 			self.sprites.colonos_atirador.add(colono_atirador)
 			self.sprites.eixo.add(colono_atirador)
@@ -268,10 +268,12 @@ class Main:
 		self.ambiente.key.set_repeat(5,10)
 		self.ambiente.mixer.music.load('sounds/runtothehills8bits.mp3')
 		self.ambiente.mixer.music.play()
-		self.ambiente.mixer.music.set_volume(0.1)
+		self.ambiente.mixer.music.set_volume(0.05)
 		paused_menu = False
 		
 		while not paused_menu:
+
+
 			self.ambiente.event.get()
 			self.respawn_soldados('bot','top')
 			self.respawn_corvo(randint(4000,10000))
@@ -312,13 +314,7 @@ db.create_tables([Player])
 
 main = Main()
 main.iniciar()
-'''
-except Exception as error:
-	with mss() as sct:
-		filename = sct.shot()
-		print(filename)
-		print(error)
-'''
+
 
 
 

@@ -1,4 +1,4 @@
-import imagens
+
 from boneco import Boneco
 from objeto import Objeto
 class Barreira(Objeto):

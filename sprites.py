@@ -6,7 +6,7 @@ from colono_atirador import Colono_atirador
 from colono_espada import Colono_espada
 from cabana import Cabana
 from barreira import Barreira
-import imagens
+
 
 class Sprites:
 

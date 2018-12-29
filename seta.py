@@ -1,4 +1,4 @@
-import imagens
+
 from objeto import Objeto
 
 class Seta(Objeto):

@@ -1,4 +1,4 @@
-import imagens
+
 from boneco import Boneco
 
 class Colono_atirador(Boneco):
@@ -20,7 +20,7 @@ class Colono_atirador(Boneco):
 		self.atacar_barreira = False
 		print(self.image.get_width())
 		self.image = self.barco
-		self.vel_x = -0.1
+		self.vel_x = vel_x
 		self.lane = lane
 		self.dano = 1 
 
@@ -31,7 +31,7 @@ class Colono_atirador(Boneco):
 	def animar(self):
 		if self.rect.x < 1100 and self.rect.x > 900:
 			self.clock_atirar = self.ambiente.time.get_ticks()
-			self.vel_x = -0.3
+
 
 		elif self.rect.x < 820:
 			self.animacao_caminhando()

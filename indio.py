@@ -1,5 +1,5 @@
 from boneco import Boneco
-import imagens
+
 
 class Indio(Boneco):
 

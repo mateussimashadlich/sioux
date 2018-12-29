@@ -1,4 +1,4 @@
-import imagens
+
 from boneco import Boneco
 
 

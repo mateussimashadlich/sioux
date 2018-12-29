@@ -1,4 +1,4 @@
-import imagens
+
 from boneco import Boneco
 
 class Colono_espada(Boneco):
@@ -23,7 +23,7 @@ class Colono_espada(Boneco):
 		self.clock_golpear = self.ambiente.time.get_ticks()
 		self.atacar_barreira = False
 		self.image = self.barco.convert_alpha()
-		self.vel_x = -0.1
+		self.vel_x = -0.05
 		self.lane = lane
 
 	def atacar(alvo):
@@ -34,7 +34,7 @@ class Colono_espada(Boneco):
 		if self.rect.x > 820:
 			pass
 		else:
-			self.vel_x = -0.4
+
 			self.animacao_caminhando()
 
 	def animacao_caminhando(self):
